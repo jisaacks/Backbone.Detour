@@ -92,8 +92,13 @@ And finally, you can specify your own comparator for uniqueness:
 
 ```javascript
 routeOptions: function() {
-  this.optional('users', {type: 'array', append: true, unique: true, comparator: function(a,b){
-    return a.substr(5) === b.substr(5);
-  }});
+  this.optional('users', {
+    type: 'array', 
+    append: true, 
+    unique: true, 
+    comparator: function(a,b){
+      return a.substr(5) === b.substr(5);
+    }
+  });
 }
 ```
