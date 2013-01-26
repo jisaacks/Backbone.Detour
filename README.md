@@ -16,6 +16,7 @@ routes: {
   "owner/:owner"                       : "someFunction"
   "type/:type/date/:date"              : "someFunction"
   "date/:date/owner/:owner"            : "someFunction"
+  "type/:type/owner/:owner"            : "someFunction"
   "type/:type/date/:date/owner/:owner" : "someFunction"
 }
 ```
@@ -25,11 +26,12 @@ With **Backbone.Detour** the definition would simply be:
 
 ```javascript
 routeOptions: function() {
-  optional('type');
-  optional('date');
-  optional('owner');
+  this.optional('type');
+  this.optional('date');
+  this.optional('owner');
 }
 ```
+
 
 ### Usage
 
@@ -39,15 +41,15 @@ You extend **Backbone.Detour** and define the methods `routeOptions` and `handle
 var router = Backbone.Detour.extend({
 
   routeOptions: function() {
-    optional('type');
-    optional('date');
-    optional('owner');
+    this.optional('type');
+    this.optional('date');
+    this.optional('owner');
   },
 
   handleRoute: function(args) {
-    type = args.type;
-    date = args.date;
-    owner = args.owner;
+    this.type = args.type;
+    this.date = args.date;
+    this.owner = args.owner;
   }
 
 });
