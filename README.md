@@ -1,6 +1,6 @@
 # Backbone.Detour
 
-*A different kind a router*
+*A different kind of router*
 
 --------------
 
@@ -62,7 +62,7 @@ router.navigate('owner/whoever', {trigger: true});
 would result in whatever you prevously had set for *type* and *date* being cleared. So you would have to keep track of all the values for all the paramters you are *not* changing, just so you could *not change them*:
 
 ```javascript
-router.navigate('type/'+currentType+'/date'+currentDate+'owner/whoever', {trigger: true});
+router.navigate('type/'+currentType+'/date/'+currentDate+'/owner/whoever', {trigger: true});
 ```
 For long lists of parameters this would be tedious.
 
