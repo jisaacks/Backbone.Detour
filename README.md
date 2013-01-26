@@ -83,3 +83,8 @@ router.updateRoute({owner: 'whoever', type: false});
 The above call would update the route to change the **owner** param to *whoever* and clear any value for the **type** parameter if it exists.
 
 ### [Check our the extra features](https://github.com/jisaacks/Backbone.Detour/blob/master/docs/extra_features.md#readme)
+
+--------------
+
+Backbone.Detour was originally created for use in a project at [Emcien](https://github.com/emcien).
+Emcien is [hiring](http://emcien.com/about/careers/)
