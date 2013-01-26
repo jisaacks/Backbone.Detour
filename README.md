@@ -84,7 +84,12 @@ The above call would update the route to change the **owner** param to *whoever*
 
 ### [Check out the extra features](https://github.com/jisaacks/Backbone.Detour/blob/master/docs/extra_features.md#readme)
 
+### Requirements
+
+ - [Backbone.js](http://backbonejs.org/)
+ - [underscore.js](http://underscorejs.org/)
+
 --------------
 
-Backbone.Detour was originally created for use in a project at [Emcien](https://github.com/emcien).
-Emcien is [hiring](http://emcien.com/about/careers/)
+Backbone.Detour was originally created by JD Isaacks for use in a project at [Emcien](https://github.com/emcien).
+**Emcien is [hiring](http://emcien.com/about/careers/)**
