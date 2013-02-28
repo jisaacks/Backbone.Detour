@@ -1,5 +1,28 @@
 # Backbone.Detour Extra Features
 
+### Default Values
+
+```javascript
+routeOptions: function() {
+  this.optional('type', {default: 'manager'});
+}
+```
+
+Now anytime *type* is not passed as a parameter to the route, the object passed to `handleRoute` will have a *type* property set to *manager*.
+
+### Parameter Groups
+
+```javascript
+routeOptions: function() {
+  this.optional('banana', {group: 'fruit'})
+  this.optional('apple', {group: 'fruit'})
+  this.optional('orange', {group: 'fruit'})
+  this.optional('broccoli', {group: 'vegetable'})
+}
+```
+
+Now if *apple, banana, or orange* are set, it will clear any values for any other fruits. But setting a value for broccoli will not.
+
 ### Required Params
 
 You can set a parameter as **required** by passing it to *required* instead of *optional*:
@@ -11,16 +34,6 @@ routeOptions: function() {
 ```
 
 Now if any params are set, but *owner* is not, then the object passed to `handleRoute` will be empty
-
-### Default Values
-
-```javascript
-routeOptions: function() {
-  this.optional('type', {default: 'manager'});
-}
-```
-
-Now anytime *type* is not passed as a parameter to the route, the object passed to `handleRoute` will have a *type* property set to *manager*.
 
 ### Tokens
 
