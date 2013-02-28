@@ -46,8 +46,8 @@ class Backbone.Detour extends Backbone.Router
     
     # set defaults
     _.each @paramsForRoute, (opt) ->
-      if opt.default
-        o[opt.name] = opt.default unless o[opt.name]
+      if opt.default?
+        o[opt.name] = (opt.default?()||opt.default) unless o[opt.name]
     [o, toks]
 
   #--
@@ -69,13 +69,13 @@ class Backbone.Detour extends Backbone.Router
       prevVal = @previousValues[pfr.name]
       val = if opts[pfr.name] == false
         # passed as false, try to use default
-        pfr.default or false
+        (pfr.default?()||pfr.default) or false
       else if opts[pfr.name]
         # passed as something other than false, use it
         opts[pfr.name]
       else
         # not passed, use prev value or default or false
-        prevVal or pfr.default or false
+        prevVal or (pfr.default?()||pfr.default) or false
       if val && pfr.type?.toLowerCase() == 'array' && pfr.append
         vals = val
         prevVals = prevVal or []
