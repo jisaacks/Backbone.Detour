@@ -76,6 +76,10 @@ class Backbone.Detour extends Backbone.Router
       else
         # not passed, use prev value or default or false
         prevVal or (pfr.default?()||pfr.default) or false
+      
+      if pfr.squash? && val == pfr.squash
+        val = false
+
       if val && pfr.type?.toLowerCase() == 'array' && pfr.append
         vals = val
         prevVals = prevVal or []
