@@ -80,6 +80,20 @@ class Backbone.Detour extends Backbone.Router
       if pfr.squash? && val == pfr.squash
         val = false
 
+      if pfr.group
+        # see if it was just set
+        if val && !prevVal
+          # this value was just set for this group
+          # clear all other params of the same group
+          grouped = _.filter @paramsForRoute, (other_pfr) ->
+            other_pfr.group == pfr.group && other_pfr.name != pfr.name
+          _.each grouped, (member) -> 
+            # clear it from the opts
+            opts[member.name] = false
+            # it may have already been set to options,
+            # so clear it from there too.
+            options[member.name] = false
+
       if val && pfr.type?.toLowerCase() == 'array' && pfr.append
         vals = val
         prevVals = prevVal or []
