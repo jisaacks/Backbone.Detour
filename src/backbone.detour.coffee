@@ -42,6 +42,8 @@ class Backbone.Detour extends Backbone.Router
       # convert remaining tokens into key value pairs
       _.each values, (v,i) ->
         (if i % 2 == 0 then keys else vals).push v
+    
+    vals = _.map vals, (val) -> decodeURI(val)
     o = _.object(keys,vals)
     
     # set defaults
