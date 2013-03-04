@@ -1,0 +1,9 @@
+{
+  "dependencies" : {
+    "underscore" :  ">=1.4",
+    "backbone"   :  ">=0.9"
+  },
+  "devDependencies": {
+    "sinon" :  ">=1.6"
+  }
+}
