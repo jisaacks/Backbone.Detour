@@ -1,6 +1,6 @@
 {
-  "name" : "Backbone.Detour",
-  "version" : "0.1.0",
+  "name" : "backbone.detour",
+  "version" : "0.1.1",
   "description" : "Use Backbone.js routing to store paramters",
   "author" : {
     "name" : "JD Isaacks",
