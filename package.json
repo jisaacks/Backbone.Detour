@@ -1,4 +1,17 @@
 {
+  "name" : "Backbone.Detour",
+  "version" : "0.1.0",
+  "description" : "Use Backbone.js routing to store paramters",
+  "author" : {
+    "name" : "JD Isaacks",
+    "email" : "jd@jisaacks.com",
+    "url" : "http://jisaacks.com"
+  },
+  "main": "./lib/backbone.detour",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jisaacks/Backbone.Detour.git"
+  },
   "dependencies" : {
     "underscore" :  ">=1.4",
     "backbone"   :  ">=0.9"
