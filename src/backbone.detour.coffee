@@ -8,16 +8,14 @@ class Backbone.Detour extends Backbone.Router
   #--
 
   routeHandler: (route) ->
-    parsed = @parseRoute(route)
-    args   = parsed[0]
-    toks   = parsed[1]
+    args   = @parseRoute(route)
     _.each @paramsForRoute, (pfr) =>
       val = args[pfr.name]
       val = val?.split?(',') or val if pfr.type?.toLowerCase() == 'array'
       args[pfr.name] = val
     @previousValues = {} unless @previousValues
     _.each args, (v,k) => @previousValues[k] = v
-    @handleRoute args, toks
+    @handleRoute args
 
   #--
 
@@ -25,22 +23,14 @@ class Backbone.Detour extends Backbone.Router
     # build the paramsForRoute array
     unless @paramsForRoute?
       @paramsForRoute = []
-      @expectedTokens = []
       @routeOptions()
     
     # build arg object from route
     keys = []
     vals = []
-    toks = []
+    
     if route
-      tokens = route.split('/')
-      # search for expected tokens
-      _.each tokens, (t) =>
-        toks.push t if t in @expectedTokens
-      # strip found toks out of tokens
-      values = _.without tokens, toks...
-      # convert remaining tokens into key value pairs
-      _.each values, (v,i) ->
+      _.each route.split('/'), (v,i) ->
         (if i % 2 == 0 then keys else vals).push v
     
     vals = _.map vals, (val) -> decodeURI(val)
@@ -50,20 +40,11 @@ class Backbone.Detour extends Backbone.Router
     _.each @paramsForRoute, (opt) ->
       if opt.default?
         o[opt.name] = (opt.default?()||opt.default) unless o[opt.name]
-    [o, toks]
+    o
 
   #--
 
   buildRoute: (opts={}) ->
-    # extract tokens
-    if opts.tokens
-      @previousTokens = opts.tokens
-      tokens = opts.tokens.join('/')+'/'
-    else if @previousTokens
-      tokens = @previousTokens.join('/')+'/'
-    else
-      tokens = ''
-    opts = _.omit opts, 'tokens'
     # build all options
     options = {}
     @previousValues = {} unless @previousValues 
@@ -121,11 +102,11 @@ class Backbone.Detour extends Backbone.Router
         # add option to route if it is set
         rs.push "#{pfr.name}/#{encodeURI(options[pfr.name])}" if options[pfr.name]
       r = rs.join "/"
-    tokens+r
+    r
 
   # public api -----
 
-  updateRoute: (opts) ->
+  updateRoute: (opts) -> 
     @navigate @buildRoute(opts), trigger: true
 
   #--
@@ -138,11 +119,6 @@ class Backbone.Detour extends Backbone.Router
     opts.name = name
     opts.required = true
     @paramsForRoute.push opts
-
-  tokens: (list...) ->
-    @expectedTokens or= []
-    @expectedTokens.push list
-    @expectedTokens = _.uniq _.flatten @expectedTokens
 
 
   # to be overridden ---
