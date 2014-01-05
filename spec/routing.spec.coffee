@@ -107,9 +107,9 @@ describe "Routing", ->
 
   #-
 
-  it "clears others of the same group", ->
-    router.optional 'banana', group:'fruit'
-    router.optional 'apple', group:'fruit'
+  it "clears others specified to be cleared", ->
+    router.optional 'banana'
+    router.optional 'apple', clears:'banana'
     router.updateRoute banana:'3'
     expect(spy.lastCall.args).toEqual([banana:'3',page:'1'])
     router.updateRoute page:'4'
