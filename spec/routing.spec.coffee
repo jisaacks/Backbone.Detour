@@ -13,6 +13,9 @@ stubber.stub()
 # Create spy to keep an eye on our router
 spy = sinon.spy()
 
+# Convenience method for grabbing values passed to handleRoute
+spyarg = (name) -> spy.lastCall.args[0][name]
+
 # Extend Backbone.Detour for our sepcs
 class SpecRouter extends Backbone.Detour
   routeOptions: ->
@@ -35,6 +38,7 @@ describe "Routing", ->
 
   beforeEach ->
     router.reset()
+    spy.reset()
 
   #-
 
@@ -46,28 +50,28 @@ describe "Routing", ->
 
   it "passes the correct args to handleRoute", ->
     router.updateRoute page:'2'
-    expect(spy.lastCall.args[0].page).toEqual('2')
+    expect(spyarg 'page').toEqual('2')
     
   #-
 
   it "falls back to default when passed false", ->
     router.updateRoute page:'100'
     router.updateRoute page:false
-    expect(spy.lastCall.args[0].page).toEqual('1')
+    expect(spyarg 'page').toEqual('1')
 
   #-
 
   it "works with spaces in values", ->
     router.optional 'full_name'
     router.updateRoute full_name:'JD Isaacks'
-    expect(spy.lastCall.args[0].full_name).toEqual('JD Isaacks')
+    expect(spyarg 'full_name').toEqual('JD Isaacks')
 
   #-
 
   it "works with arrays", ->
     router.optional 'list', type:'array'
     router.updateRoute list:['foo','bar']
-    expect(spy.lastCall.args[0].list).toEqual(['foo','bar'])
+    expect(spyarg 'list').toEqual(['foo','bar'])
 
   #-
 
@@ -75,7 +79,7 @@ describe "Routing", ->
     router.optional 'list', type:'array'
     router.updateRoute list:['foo']
     router.updateRoute list:['bar']
-    expect(spy.lastCall.args[0].list).toEqual(['bar'])
+    expect(spyarg 'list').toEqual(['bar'])
 
   #-
 
@@ -83,7 +87,7 @@ describe "Routing", ->
     router.optional 'list', type:'array', append:true
     router.updateRoute list:['foo']
     router.updateRoute list:['bar']
-    expect(spy.lastCall.args[0].list).toEqual(['bar','foo'])
+    expect(spyarg 'list').toEqual(['bar','foo'])
 
   #-
 
@@ -93,7 +97,7 @@ describe "Routing", ->
     router.updateRoute list:['b']
     router.updateRoute list:['c']
     router.updateRoute list:['d']
-    expect(spy.lastCall.args[0].list).toEqual(['d','c','b'])
+    expect(spyarg 'list').toEqual(['d','c','b'])
 
   #-
 
@@ -102,7 +106,7 @@ describe "Routing", ->
     router.updateRoute list:['a']
     router.updateRoute list:['b']
     router.updateRoute list:['a']
-    expect(spy.lastCall.args[0].list).toEqual(['a','b','a'])
+    expect(spyarg 'list').toEqual(['a','b','a'])
 
   #-
 
@@ -111,7 +115,7 @@ describe "Routing", ->
     router.updateRoute list:['a']
     router.updateRoute list:['b']
     router.updateRoute list:['a']
-    expect(spy.lastCall.args[0].list).toEqual(['a','b'])
+    expect(spyarg 'list').toEqual(['a','b'])
 
   #-
 
@@ -119,17 +123,17 @@ describe "Routing", ->
     router.optional 'banana'
     router.optional 'apple', clears:'banana'
     router.updateRoute banana:'3'
-    expect(spy.lastCall.args[0].banana).toEqual('3')
+    expect(spyarg 'banana').toEqual('3')
     router.updateRoute page:'4'
-    expect(spy.lastCall.args[0].banana).toEqual('3')
+    expect(spyarg 'banana').toEqual('3')
     router.updateRoute apple:'2'
-    expect(spy.lastCall.args[0].banana).toEqual(undefined)
+    expect(spyarg 'banana').toEqual(undefined)
 
   it "sets a param to default if cleared", ->
     router.optional 'filter', clears:'page'
     router.updateRoute page:'2'
-    expect(spy.lastCall.args[0].page).toEqual('2')
+    expect(spyarg 'page').toEqual('2')
     router.updateRoute filter:'cool'
-    expect(spy.lastCall.args[0].page).toEqual('1')
+    expect(spyarg 'page').toEqual('1')
 
 Backbone.history.stop()
