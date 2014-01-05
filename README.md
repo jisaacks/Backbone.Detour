@@ -89,6 +89,14 @@ The above call would update the route to change the **owner** param to *whoever*
  - [Backbone.js](http://backbonejs.org/)
  - [underscore.js](http://underscorejs.org/)
 
+### Contributing
+
+Add specs for any new functionality. To run the specs:
+
+* Install [jasmine-node](https://github.com/mhevery/jasmine-node): `npm install -g jasmine-node`
+* Install [coffee-script](https://github.com/jashkenas/coffee-script): `npm install -g coffee-script`
+* Run specs: `jasmine-node --coffee spec/`
+
 --------------
 
 Backbone.Detour was originally created by JD Isaacks for use in a project at [Emcien](https://github.com/emcien).
