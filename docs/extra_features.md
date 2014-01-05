@@ -10,18 +10,17 @@ routeOptions: function() {
 
 Now anytime *type* is not passed as a parameter to the route, the object passed to `handleRoute` will have a *type* property set to *manager*.
 
-### Parameter Groups
+### Clearing Paramaters
 
 ```javascript
 routeOptions: function() {
-  this.optional('banana', {group: 'fruit'})
-  this.optional('apple', {group: 'fruit'})
-  this.optional('orange', {group: 'fruit'})
-  this.optional('broccoli', {group: 'vegetable'})
+  this.optional('page', {default: '1'})
+  this.optional('filter', {clears: 'page'})
+  this.optional('order', {clears: 'page'})
 }
 ```
 
-Now if *apple, banana, or orange* are set, it will clear any values for any other fruits. But setting a value for broccoli will not.
+Now if *filter* or *order* are set, it will reset *page* to *1*.
 
 ### Required Params
 
