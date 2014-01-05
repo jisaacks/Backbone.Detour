@@ -11,7 +11,7 @@ describe "Routing", ->
   # setup
   class TestRouter extends Backbone.Detour
     routeOptions: ->
-      @optional 'page', default: 1
+      @optional 'page', default: '1'
   
   router = null
   spy = null
@@ -117,4 +117,9 @@ describe "Routing", ->
     router.updateRoute apple:'2'
     expect(spy.lastCall.args).toEqual([apple:'2',page:'4'])
 
-
+  it "sets a param to default if cleared", ->
+    router.optional 'filter', clears:'page'
+    router.updateRoute page:'2'
+    expect(spy.lastCall.args).toEqual([page:'2'])
+    router.updateRoute filter:'cool'
+    expect(spy.lastCall.args).toEqual([filter:'cool',page:'1'])
