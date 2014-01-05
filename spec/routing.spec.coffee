@@ -53,14 +53,14 @@ describe "Routing", ->
   it "falls back to default when passed false", ->
     router.updateRoute page:'100'
     router.updateRoute page:false
-    expect(spy.lastCall.args).toEqual([page:'1'])
+    expect(spy.lastCall.args[0].page).toEqual('1')
 
   #-
 
   it "works with spaces in values", ->
     router.optional 'full_name'
     router.updateRoute full_name:'JD Isaacks'
-    expect(spy.lastCall.args).toEqual([full_name:'JD Isaacks',page:'1'])
+    expect(spy.lastCall.args[0].full_name).toEqual('JD Isaacks')
 
   #-
 
