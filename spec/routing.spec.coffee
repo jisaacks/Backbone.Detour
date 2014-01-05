@@ -19,6 +19,10 @@ class SpecRouter extends Backbone.Detour
     @optional 'page', default: '1'
   handleRoute: (args) -> 
     spy(args)
+  reset: ->
+    @previousValues = null
+    @paramsForRoute = []
+    @routeOptions()
 
 # Create an instance
 router = new SpecRouter()
@@ -28,6 +32,9 @@ Backbone.history.start()
 
 # OK enough taking, lets start testing.
 describe "Routing", ->
+
+  beforeEach ->
+    router.reset()
 
   #-
 
@@ -65,46 +72,46 @@ describe "Routing", ->
   #-
 
   it "does not append by default", ->
-    router.optional 'unappenedList', type:'array'
-    router.updateRoute unappenedList:['foo']
-    router.updateRoute unappenedList:['bar']
-    expect(spy.lastCall.args[0].unappenedList).toEqual(['bar'])
+    router.optional 'list', type:'array'
+    router.updateRoute list:['foo']
+    router.updateRoute list:['bar']
+    expect(spy.lastCall.args[0].list).toEqual(['bar'])
 
   #-
 
   it "does append when set to", ->
-    router.optional 'appenedList', type:'array', append:true
-    router.updateRoute appenedList:['foo']
-    router.updateRoute appenedList:['bar']
-    expect(spy.lastCall.args[0].appenedList).toEqual(['bar','foo'])
+    router.optional 'list', type:'array', append:true
+    router.updateRoute list:['foo']
+    router.updateRoute list:['bar']
+    expect(spy.lastCall.args[0].list).toEqual(['bar','foo'])
 
   #-
 
   it "does not append more than appendLimit", ->
-    router.optional 'limitedList', type:'array', append:true, appendLimit:3
-    router.updateRoute limitedList:['a']
-    router.updateRoute limitedList:['b']
-    router.updateRoute limitedList:['c']
-    router.updateRoute limitedList:['d']
-    expect(spy.lastCall.args[0].limitedList).toEqual(['d','c','b'])
+    router.optional 'list', type:'array', append:true, appendLimit:3
+    router.updateRoute list:['a']
+    router.updateRoute list:['b']
+    router.updateRoute list:['c']
+    router.updateRoute list:['d']
+    expect(spy.lastCall.args[0].list).toEqual(['d','c','b'])
 
   #-
 
   it "does not unique array values by default", ->
-    router.optional 'dupList', type:'array', append:true
-    router.updateRoute dupList:['a']
-    router.updateRoute dupList:['b']
-    router.updateRoute dupList:['a']
-    expect(spy.lastCall.args[0].dupList).toEqual(['a','b','a'])
+    router.optional 'list', type:'array', append:true
+    router.updateRoute list:['a']
+    router.updateRoute list:['b']
+    router.updateRoute list:['a']
+    expect(spy.lastCall.args[0].list).toEqual(['a','b','a'])
 
   #-
 
   it "does unique array values when set to", ->
-    router.optional 'uniqList', type:'array', append:true, unique:true
-    router.updateRoute uniqList:['a']
-    router.updateRoute uniqList:['b']
-    router.updateRoute uniqList:['a']
-    expect(spy.lastCall.args[0].uniqList).toEqual(['a','b'])
+    router.optional 'list', type:'array', append:true, unique:true
+    router.updateRoute list:['a']
+    router.updateRoute list:['b']
+    router.updateRoute list:['a']
+    expect(spy.lastCall.args[0].list).toEqual(['a','b'])
 
   #-
 
